@@ -1,6 +1,6 @@
-# JonathanTodoApp (jonathan-todoapp)
+# Mémo'App
 
-John&Goapp
+Jonathan Ngomegni App
 
 ## Install the dependencies
 ```bash
