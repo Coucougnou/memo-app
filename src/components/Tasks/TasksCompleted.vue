@@ -3,6 +3,7 @@
       appear
       enter-active-class="animated zoomIn"
       leave-active-class="animated zoomOut" >
+      
         <div class="q-mt-lg">
             <list-header style="background-color:#508771;font-family:Montserrat;"> Tâches accomplis</list-header>
                 <q-list 
