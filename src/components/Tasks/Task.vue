@@ -2,6 +2,7 @@
     <q-item
        @click="updateTask({ id: id, updates: { completed: !task.completed } })"
        :class="!task.completed ? 'bg-orange-2' : 'bg-green-2'"
+       v-touch-hold:1000.mouse="showEditTaskModal"
        clickable
        v-ripple>
         <q-item-section side top>
@@ -14,7 +15,7 @@
           <q-item-label
           style="font-family:Montserrat;"
           :class="{ 'text-strikethrough' : task.completed }"
-          > {{ task.name }}
+          v-html="$options.filters.searchHighlight(task.name, search)"> 
           </q-item-label>
         </q-item-section>
 
@@ -34,7 +35,7 @@
                class="row justify-end"
                caption
                >
-                {{ task.dueDate }}
+                {{ task.dueDate | niceDate }}
               </q-item-label>
                <q-item-label 
                class="row justify-end"
@@ -47,7 +48,7 @@
         <q-item-section side>
           <div class="row">
             <q-btn
-            @click.stop="showEditTask= true"
+            @click.stop="showEditTaskModal"
               flat
               round
               dense
@@ -75,7 +76,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import { date } from 'quasar'
+
 export default {
     props: ['task', 'id'],
     data() {
@@ -83,8 +86,14 @@ export default {
         showEditTask: false
       }
     },
+    computed: {
+        ...mapState('tasks', ['search'])
+    },
     methods: {
         ...mapActions('tasks', ['updateTask', 'deleteTask']),
+        showEditTaskModal() {
+          this.showEditTask = true
+        },
         promptToDelete(id) {
           this.$q.dialog({
           title: 'Confirmer la suppression',
@@ -102,6 +111,18 @@ export default {
           })
     
         }
+    },
+    filters: {
+      niceDate(value) {
+        return date.formatDate(value, 'D MMMM')
+      },
+      searchHighlight(value, search) {
+        
+        if (search) {
+          return value.replace(search, '<span class="bg-blue-6">'+ search +'</span>')
+        }
+        return value
+      }
     },
     components: {
       'edit-task': require('components/Tasks/Modals/EditTask.vue').default

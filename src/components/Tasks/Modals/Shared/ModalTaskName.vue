@@ -1,28 +1,35 @@
 <template>
    <div class="row q-mb-sm">
                 <q-input
-                outlined
-                :value="name"
-                @input="$emit('update:name', $event)"
-                :rules="[val => !!val || 'Nom requis']"
-                autofocus
-                ref="name"
-                label="Nom de la tâche"
-                class="col">
+                  outlined
+                  :value="name"
+                  @input="$emit('update:name', $event)"
+                  :rules="[val => !!val || 'Nom requis']"
+                  autofocus
+                  v-select-all
+                  ref="name"
+                  label="Nom de la tâche"
+                  class="col">
                     <template v-slot:append>
                     <q-icon
-                    v-if="name"
-                    @click="$emit('update:name', '')"
+                      v-if="name"
+                      @click="$emit('update:name', '')"
                       name="close"
                       class="cursor-pointer" />
                     </template>
                 </q-input>
-            </div>
+    </div>
 </template>
 
 <script>
+
+import { selectAll } from 'src/directives/directive-select-all'
+
 export default {
-    props: ['name']
+    props: ['name'],
+    directives: {
+        selectAll
+    }
 }
 </script>
 

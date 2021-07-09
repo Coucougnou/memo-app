@@ -89,8 +89,8 @@ module.exports = function( /* ctx */ ) {
             // (like functional components as one of the examples),
             // you can manually specify Quasar components/directives to be available everywhere:
             //
-            components: ['QDialog'],
-            directives: ['ClosePopup'],
+            components: ['QDialog', 'QSelect'],
+            directives: ['Ripple','ClosePopup','TouchHold'],
 
             // Quasar plugins
             plugins: ['Notify', 'Dialog']
@@ -98,7 +98,7 @@ module.exports = function( /* ctx */ ) {
 
         // animations: 'all', // --- includes all animations
         // https://v1.quasar.dev/options/animations
-        animations: [],
+        animations: ['zoomIn', 'zoomOut'],
 
         // https://v1.quasar.dev/quasar-cli/developing-ssr/configuring-ssr
         ssr: {

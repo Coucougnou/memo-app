@@ -1,18 +1,22 @@
 <template>
-<div>
-    <list-header style="background-color:#508771;font-family:Montserrat;"> Tâches accomplis</list-header>
-    <q-list 
-   separator
-   bordered>
+    <transition
+      appear
+      enter-active-class="animated zoomIn"
+      leave-active-class="animated zoomOut" >
+        <div class="q-mt-lg">
+            <list-header style="background-color:#508771;font-family:Montserrat;"> Tâches accomplis</list-header>
+                <q-list 
+                separator
+                bordered>
 
-      <task
-      v-for="(task, key) in tasksCompleted"
-      :key= "key"
-      :task="task"
-      :id="key"></task>
-    </q-list>
-
-</div>
+                    <task
+                    v-for="(task, key) in tasksCompleted"
+                    :key= "key"
+                    :task="task"
+                    :id="key"></task>
+                </q-list>
+        </div>
+    </transition>
 </template>
 
 <script>
