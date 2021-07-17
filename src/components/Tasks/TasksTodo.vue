@@ -5,7 +5,13 @@
       enter-active-class="animated zoomIn"
       leave-active-class="animated zoomOut" >
         <div>
-            <list-header class="text-weight-thin" style="background: linear-gradient(to right, #000046, #1cb5e0);font-family:Montserrat;">Tâches à faire</list-header>
+            <list-header
+              v-if="!settings.showTasksInOneList"
+              class="text-weight-thin"
+              style="background: linear-gradient(to right, #000046, #1cb5e0);font-family:Montserrat;"
+              >Tâches
+              à
+              faire</list-header>
 
             <q-list 
             separator
@@ -22,8 +28,13 @@
 
 <script>
 
+import { mapGetters } from 'vuex'
+
 export default {
     props: ['tasksTodo'],
+    computed: {
+        ...mapGetters('settings', ['settings'])
+    },
     components: {
           'task' : require('components/Tasks/Task.vue').default,
           'list-header' : require('components/Shared/ListHeader.vue').default,

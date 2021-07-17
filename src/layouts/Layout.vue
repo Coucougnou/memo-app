@@ -1,9 +1,29 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header >
-      <q-toolbar style="background: linear-gradient(to right, #000046, #1cb5e0);height:85px;">
-        <q-img class="absolute-center" src="../assets/logo.png" style="width:120px;"/>
-        <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu" side="right"/>
+      <q-toolbar style="background: linear-gradient(to right, #000046, #1cb5e0);height:80px;">
+        <q-img
+          class="absolute-center"
+          src="../assets/logo.png"
+          style="width:120px;" />
+
+        <q-btn
+        v-if="!loggedIn"
+          to="/auth"
+          flat
+          icon-right="account_circle"
+          label="Connexion"
+          class="absolute-right" />
+
+        <q-btn
+          v-else
+          @click="logoutUser"
+          to="/auth"
+          flat
+          icon-right="account_circle"
+          label="Deconnexion"
+          class="absolute-right" />
+
       </q-toolbar>
     </q-header>
 
@@ -20,9 +40,11 @@
       </q-tabs>
       </q-footer>
     <q-drawer
-      v-model="drawerLeft"
+      v-model="leftDrawerOpen"
       :breakpoint="767"
-      :width="250" 
+      :width="250"
+      show-if-above
+      bordered
     >
       <q-list padding>
         <q-item-label
@@ -57,14 +79,14 @@
 </template>
 
 <script>
-
+import { mapState, mapActions } from 'vuex'
 import { openURL } from 'quasar'
 
 export default {
   name: 'MyLayout',
   data () {
     return {
-      drawerLeft: false,
+      leftDrawerOpen: false,
       navs: [
         { 
           label: 'Tâches',
@@ -72,7 +94,7 @@ export default {
           to: '/'
         },
         { 
-          label: 'Informations',
+          label: 'Paramètres',
           icon: 'settings',
           to: '/settings'
         },
@@ -81,7 +103,11 @@ export default {
 
     }
   },
+  computed: {
+    ...mapState('auth', ['loggedIn'])
+  },
   methods: {
+    ...mapActions('auth', ['logoutUser']),
     openURL
   }
 }
@@ -104,12 +130,11 @@ export default {
  background: linear-gradient(to bottom, #000046, #1cb5e0);
 }
 
-
 .q-footer {
    background: linear-gradient(to left, #56ccf2, #2f80ed);
 }
 
 .q-page {
-  background-image: url("https://picsum.photos/1920/1080?random");
+  background: white;
 }
 </style>
