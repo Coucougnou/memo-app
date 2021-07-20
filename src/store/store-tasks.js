@@ -68,6 +68,22 @@ const actions = {
             }
             commit('addTask', payload)
         })
+
+        // child changed
+        userTasks.on('child_changed', snapshot => {
+            let task = snapshot.val()
+            let payload = {
+                id: snapshot.key,
+                updates: task
+            }
+            commit('updateTask', payload)
+        })
+
+        // child remove
+        userTasks.on('child_remove', snapshot => {
+            let taskId = snapshot.key 
+            commit('deleteTask', taskId)
+        })
     }
 }
 
